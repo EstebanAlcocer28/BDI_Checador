@@ -27,10 +27,13 @@ public class VentanaPrincipal extends JFrame {
     private JTextField campoJobNo;
     private JTextField campoFechaDesde;
     private JTextField campoFechaHasta;
+    private JTextField campoHoraDesde;   // NUEVO
+private JTextField campoHoraHasta;   // NUEVO
     private JComboBox<String> comboEstado;
     private JButton btnBuscar;
     private JButton btnCargar;
     private Buscador buscador;
+
 
     public VentanaPrincipal() {
         setTitle("Buscador de Asistencia");
@@ -76,7 +79,7 @@ public class VentanaPrincipal extends JFrame {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBorder(BorderFactory.createTitledBorder("Criterios de búsqueda"));
-        panel.setPreferredSize(new Dimension(280, 300));
+        panel.setPreferredSize(new Dimension(280, 400));   // antes 300
 
         // Nombre
         panel.add(new JLabel("Nombre contiene:"));
@@ -105,6 +108,20 @@ public class VentanaPrincipal extends JFrame {
         campoFechaHasta.setMaximumSize(new Dimension(Integer.MAX_VALUE, 25));
         panel.add(campoFechaHasta);
         panel.add(Box.createVerticalStrut(8));
+
+        // Hora desde  (NUEVO)
+panel.add(new JLabel("Hora desde (hh:mm):"));
+campoHoraDesde = new JTextField();
+campoHoraDesde.setMaximumSize(new Dimension(Integer.MAX_VALUE, 25));
+panel.add(campoHoraDesde);
+panel.add(Box.createVerticalStrut(8));
+
+// Hora hasta  (NUEVO)
+panel.add(new JLabel("Hora hasta (hh:mm):"));
+campoHoraHasta = new JTextField();
+campoHoraHasta.setMaximumSize(new Dimension(Integer.MAX_VALUE, 25));
+panel.add(campoHoraHasta);
+panel.add(Box.createVerticalStrut(8));
 
         // Estado
         panel.add(new JLabel("Estado:"));
@@ -161,9 +178,11 @@ actualizarTablaCompleta();
     String jobNo = campoJobNo.getText().trim();
     String fechaDesde = campoFechaDesde.getText().trim();
     String fechaHasta = campoFechaHasta.getText().trim();
+      String horaDesde   = campoHoraDesde.getText().trim();   // NUEVO
+    String horaHasta   = campoHoraHasta.getText().trim();   // NUEVO
     String estado = (String) comboEstado.getSelectedItem();
 
-    List<Registro> resultados = buscador.buscar(nombre, jobNo, fechaDesde, fechaHasta, estado);
+    List<Registro> resultados = buscador.buscar(nombre, jobNo, fechaDesde, fechaHasta, horaDesde, horaHasta, estado);
 
     // Mostrar resultados en la tabla
     modeloTabla.setRowCount(0);
@@ -178,6 +197,8 @@ actualizarTablaCompleta();
         campoJobNo.setText("");
         campoFechaDesde.setText("");
         campoFechaHasta.setText("");
+         campoHoraDesde.setText("");   // NUEVO
+    campoHoraHasta.setText("");   // NUEVO
         comboEstado.setSelectedIndex(0);
     }
 
